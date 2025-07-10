@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum ListingStatus {
+  pending
+  approved
+  rejected
+}
+
+enum JobTitle {
+  Owner_Founder
+  General_Manager
+  Sales_Manager
+  Marketing_Manager
+  Admin_Receptionist
+  Other
+}
+
+enum FleetSize {
+  Cars_5_10
+  Upto_50_Cars
+  Upto_100_Cars
+  Upto_500_Cars
+  Cars_500_plus
+}
+
+enum City {
+  Dubai
+  Abu_Dhabi
+  Ajman
+  Fujairah
+  Ras_Al_Khaimah
+  Sharjah
+  Umm_Al_Quwain
+}
+
+model Listing {
+  id             String         @id @default(cuid())
+  name           String
+  companyName    String
+  jobTitle       JobTitle
+  fleetSize      FleetSize
+  contactNumber  String
+  email          String
+  country        String
+  city           City
+  status         ListingStatus
+  createdAt      DateTime       @default(now())
+}
