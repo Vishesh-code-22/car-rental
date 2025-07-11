@@ -1,3 +1,4 @@
+import FeedbackBox from "@/components/FeedbackBox";
 import Navbar from "@/components/Navbar";
 
 const layout = ({
@@ -9,6 +10,7 @@ const layout = ({
         <main className="flex w-full h-screen">
             <Navbar />
             {children}
+            <FeedbackBox />
         </main>
     );
 };

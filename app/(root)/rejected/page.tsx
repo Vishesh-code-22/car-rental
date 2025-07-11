@@ -25,6 +25,7 @@ const page = async ({
         }
     );
     const listings = await res.json();
+    console.log(listings.total);
 
     return (
         <div className="bg-grayBg w-10/12 flex flex-col">
@@ -34,24 +35,28 @@ const page = async ({
             {listings.data.length > 0 ? (
                 <>
                     <ListingCards listings={listings.data} />
-                    <div className="flex w-full px-8 mt-4 gap-2">
-                        {pageNum > 1 && (
-                            <Link
-                                href={`/?page=${pageNum - 1}`}
-                                className="px-4 py-1 rounded-md bg-gray-900 hover:bg-gray-800 text-white flex items-center"
-                            >
-                                <ArrowLeft className="h-5" />
-                                Prev
-                            </Link>
-                        )}
-                        <Link
-                            href={`/?page=${pageNum + 1}`}
-                            className="px-4 py-1 rounded-md bg-gray-900 hover:bg-gray-800 text-white flex items-center"
-                        >
-                            Next
-                            <ArrowRight className="h-5" />
-                        </Link>
-                    </div>
+                    {listings.total > 10 && (
+                        <div className="flex w-full px-8 mt-4 gap-2">
+                            {pageNum > 1 && (
+                                <Link
+                                    href={`/?page=${pageNum - 1}`}
+                                    className="px-4 py-1 rounded-md bg-gray-900 hover:bg-gray-800 text-white flex items-center"
+                                >
+                                    <ArrowLeft className="h-5" />
+                                    Prev
+                                </Link>
+                            )}
+                            {pageNum < 2 && (
+                                <Link
+                                    href={`/?page=${pageNum + 1}`}
+                                    className="px-4 py-1 rounded-md bg-gray-900 hover:bg-gray-800 text-white flex items-center"
+                                >
+                                    Next
+                                    <ArrowRight className="h-5" />
+                                </Link>
+                            )}
+                        </div>
+                    )}
                 </>
             ) : (
                 <div className="text-gray-600 text-6xl flex justify-center items-center h-full">

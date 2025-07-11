@@ -1,11 +1,13 @@
 "use client";
 
+import { useFeedback } from "@/context/FeedbackContext";
 import { City, FleetSize, JobTitle, ListingStatus } from "@/lib/data";
 import { Listing } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const EditForm = ({ listing }: { listing: Listing }) => {
+    const { showMessage } = useFeedback();
     const [formData, setFormData] = useState({
         name: listing.name,
         companyName: listing.companyName,
@@ -38,8 +40,10 @@ const EditForm = ({ listing }: { listing: Listing }) => {
         });
 
         if (res.ok) {
+            showMessage("success", "Data is updated");
             router.push("/");
         } else {
+            showMessage("error", "Data could not be updated");
             alert("Something went wrong");
         }
     };

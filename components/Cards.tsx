@@ -1,8 +1,9 @@
 "use client";
 
+import { useFeedback } from "@/context/FeedbackContext";
 import { Listing, ListingStatus } from "@prisma/client";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 
 type CardProps = {
     listing: Listing;
@@ -10,6 +11,7 @@ type CardProps = {
 };
 
 const Card = ({ listing, onStatusUpdated }: CardProps) => {
+    const { showMessage } = useFeedback();
     const [selectStatus, setSelectStatus] = useState<ListingStatus>(
         listing.status
     );
@@ -55,8 +57,9 @@ const Card = ({ listing, onStatusUpdated }: CardProps) => {
                 disabled={listing.status !== "pending"}
                 onClick={async () => {
                     if (selectStatus === "pending") {
-                        alert(
-                            "Select either 'Approved' or 'Rejected' on submit"
+                        showMessage(
+                            "error",
+                            "Select either 'Approved' or 'Rejected'"
                         );
                         return;
                     }
@@ -74,8 +77,10 @@ const Card = ({ listing, onStatusUpdated }: CardProps) => {
                         );
                         if (res.ok) {
                             onStatusUpdated(listing.id);
+                            showMessage("success", "Status has been Updated");
                         }
                     } catch (err) {
+                        showMessage("error", "Status could not update");
                         console.error(err);
                         alert("Something went wrong");
                     }
@@ -92,4 +97,4 @@ const Card = ({ listing, onStatusUpdated }: CardProps) => {
     );
 };
 
-export default Card;
+export default React.memo(Card);
