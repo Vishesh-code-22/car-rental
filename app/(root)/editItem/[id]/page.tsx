@@ -15,7 +15,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     return (
         <div className="bg-grayBg w-10/12 flex flex-col">
             <h1 className="text-4xl mx-auto font-bold text-center my-4">
-                VIEW
+                EDIT
             </h1>
             <EditForm listing={listing} />
         </div>
